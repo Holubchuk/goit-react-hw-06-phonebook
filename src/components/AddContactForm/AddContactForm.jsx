@@ -1,7 +1,13 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../../redux/contacts/ContactsSlice';
 import css from './AddContactForm.module.css';
 import { useState } from 'react';
+import { nanoid } from 'nanoid';
 
-export const AddContactForm = ({ handleAddContact }) => {
+export const AddContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(store => store.contacts.contacts);
+
   const [form, setForm] = useState({
     name: '',
     number: '',
@@ -23,7 +29,19 @@ export const AddContactForm = ({ handleAddContact }) => {
       number: form.number,
     };
 
-    handleAddContact(formData);
+    const hasDuplicates = contacts.some(
+      contact => contact.name === formData.name
+    );
+    if (hasDuplicates) {
+      alert(`Profile with name ${formData.name} already exists!`);
+      return;
+    }
+    const finalContacts = {
+      ...formData,
+      id: nanoid(),
+    };
+
+    dispatch(addContact(finalContacts));
     setForm('');
   };
 
