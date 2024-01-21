@@ -51,7 +51,7 @@ export const App = () => {
       <AddContactForm handleAddContact={handleAddContact} />
 
       <h2 style={{ textAlign: 'center' }}>Contacts</h2>
-      <SearchFilter filter={filter} handleFilterChange={handleFilterChange} />
+      <SearchFilter handleFilterChange={handleFilterChange} />
       <ContactsList
         contacts={filteredContacts}
         handleDeleteContact={handleDeleteContact}
